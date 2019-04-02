@@ -18,7 +18,7 @@ class TaskSendConclusionEmail extends Base
      */
     public function getDescription()
     {
-        return t('Send conclusion default e-mail message when the task is moved to - feito - column');
+        return t('Send conclusion default e-mail message when the task is moved to done column');
     }
     /**
      * Get the list of compatible events

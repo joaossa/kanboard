@@ -30,6 +30,8 @@ class TaskSendConclusionEmail extends Base
     {
         return array(
             TaskModel::EVENT_MOVE_COLUMN,
+            TaskModel::EVENT_CLOSE,
+            TaskModel::EVENT_CREATE,
         );
     }
     /**
@@ -41,7 +43,10 @@ class TaskSendConclusionEmail extends Base
     public function getActionRequiredParameters()
     {
         return array(
-            'title' => t('Title'),
+            'column_id' => t('Column'),
+            'user_id' => t('User that will receive the email'),
+            'subject' => t('Email subject'),
+            'body_text' => t('Email body message'),
         );
     }
     /**
@@ -54,6 +59,9 @@ class TaskSendConclusionEmail extends Base
     {
         return array(
             'task_id',
+            'task' => array(
+                'project_id',
+                'column_id',
         );
     }
     /**

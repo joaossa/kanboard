@@ -21,7 +21,7 @@ class TaskSendConclusionEmail extends Base
      */
     public function getDescription()
     {
-        return t('Send conclusion default e-mail message when the task is moved to done column');
+        return t('Send Conclusion Default Email for Task Moved to Done Column');
     }
     /**
      * Get the list of compatible events
@@ -49,7 +49,7 @@ class TaskSendConclusionEmail extends Base
             'column_id' => t('Column'),
             'user_id' => t('User that will receive the email'),
             'subject' => t('Email subject'),
-            'body_text' => t('Email body message'),
+            'body_message' => t('Email body message'),
         );
     }
     /**
@@ -68,7 +68,7 @@ class TaskSendConclusionEmail extends Base
         );
     }
     /**
-     * Execute the action
+     * Execute the action (move the task to another column)
      *
      * @access public
      * @param  array   $data   Event data dictionary
@@ -76,7 +76,19 @@ class TaskSendConclusionEmail extends Base
      */
     public function doAction(array $data)
     {
-        return $this->taskModificationModel->update(array('id' => $data['task_id'], 'title' => $this->getParam('title')));
+        $user = $this->userModel->getById($this->getParam('user_id'));
+        if (! empty($user['email'])) {
+            $this->emailClient->send(
+                $user['email'],
+                $user['name'] ?: $user['username'],
+                $this->getParam('subject'),
+                $this->template->render('notification/task_create', array(
+                    'task' => $data['task'],
+                ))
+            );
+            return true;
+        }
+        return false;
     }
     /**
      * Check if the event data meet the action condition
@@ -87,6 +99,6 @@ class TaskSendConclusionEmail extends Base
      */
     public function hasRequiredCondition(array $data)
     {
-        return true;
+        return $data['task']['column_id'] == $this->getParam('column_id');
     }
 }

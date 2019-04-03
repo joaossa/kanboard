@@ -3,7 +3,7 @@ namespace Kanboard\Plugin\AutomaticAction\Action;
 use Kanboard\Model\TaskModel;
 use Kanboard\Action\Base;
 /**
- * Send Conclusion E-mail for Done Column Task
+ * Send Conclusion E-mail for Task Moved to Done Column 
  * https://github.com/kanboard/kanboard/blob/master/app/Action/TaskEmail.php
  * @package action
  * @author  Joao Freire

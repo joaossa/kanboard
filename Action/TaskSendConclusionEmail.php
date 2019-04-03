@@ -4,7 +4,7 @@ use Kanboard\Model\TaskModel;
 use Kanboard\Action\Base;
 /**
  * Send Conclusion E-mail for Task Moved to Done Column 
- * https://github.com/kanboard/kanboard/blob/master/app/Action/TaskEmail.php
+ * https://github.com/joaossa/kanboard/blob/master/Action/TaskSendConclusionEmail.php
  * @package action
  * @author  Joao Freire
  */

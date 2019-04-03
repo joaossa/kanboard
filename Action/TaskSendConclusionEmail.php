@@ -3,7 +3,7 @@ namespace Kanboard\Plugin\AutomaticAction\Action;
 use Kanboard\Model\TaskModel;
 use Kanboard\Action\Base;
 /**
- * Send Conclusion E-mail for Task Moved to Done Column 
+ * Send E-mail for Task Moved to a Column 
  *
  * Original author  Frederic Guillot
  * From https://github.com/kanboard/kanboard/blob/master/app/Action/TaskEmail.php
@@ -21,7 +21,7 @@ class TaskSendConclusionEmail extends Base
      */
     public function getDescription()
     {
-        return t('Send Conclusion Default Email for Task Moved to Done Column');
+        return t('Send Email for Task Moved to Column');
     }
     /**
      * Get the list of compatible events
@@ -48,8 +48,7 @@ class TaskSendConclusionEmail extends Base
         return array(
             'column_id' => t('Column'),
             'user_id' => t('User that will receive the email'),
-            'subject' => t('Email subject'),
-            'body_message' => t('Email body message'),
+            'subject' => t('Email subject')
         );
     }
     /**
@@ -77,6 +76,7 @@ class TaskSendConclusionEmail extends Base
     public function doAction(array $data)
     {
         $user = $this->userModel->getById($this->getParam('user_id'));
+        
         if (! empty($user['email'])) {
             $this->emailClient->send(
                 $user['email'],
